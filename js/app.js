@@ -1,0 +1,41 @@
+// IIFE
+(function() {
+    
+    let DB;
+    
+    window.onload = ()=> {
+        crearDB();
+    }
+
+    function crearDB() {
+        const crearDB = window.indexedDB.open('crm', 1);
+
+        crearDB.onsuccess = ()=> {
+            // pasando la BD a una variable global
+            DB = crearDB.result;
+        }
+
+        crearDB.onerror = ()=> {
+            console.log('Hubo un error');
+        }
+
+        crearDB.onupgradeneeded = ()=> {
+            const db = crearDB.result;
+
+            const objecStore = db.createObjectStore('clientes', { 
+                keyPath: 'id',
+                autoIncrement: true,
+            });
+
+            objecStore.createIndex('nombre', 'nombre', {unique: false})
+            objecStore.createIndex('correo', 'correo', {unique: true})
+            objecStore.createIndex('telefono', 'telefono', {unique: false})
+            objecStore.createIndex('empresa', 'empresa', {unique: false})
+            objecStore.createIndex('id', 'id', {unique: true})
+
+        }
+
+    }
+
+
+})();
