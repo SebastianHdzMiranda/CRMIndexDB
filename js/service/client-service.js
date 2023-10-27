@@ -1,5 +1,9 @@
+import { limpiarHTML } from "../functions/funciones.js";
+import { contenedorListado } from "../variables/variables.js";
+import { DB } from "./indexDB.js";
+
 /* FUNCION CREATE */
-function creandoNuevoCliente(cliente) {
+export function creandoNuevoCliente(cliente) {
     /* IndexDB -> CREATE */
     const transaction = DB.transaction(['clientes'], 'readwrite');
     const objectStore = transaction.objectStore('clientes');
@@ -15,7 +19,7 @@ function creandoNuevoCliente(cliente) {
 }
 
 /*FUNCION READ*/   
-function imprimirClientes(){
+export function imprimirClientes(){
     limpiarHTML();
 
     /* IndexDB -> READ */
@@ -60,7 +64,7 @@ function imprimirClientes(){
 }
 
 /* FUNCION UPDATE*/
-function actualizarCliente(cliente) {
+export function actualizarCliente(cliente) {
     /* IndexDB -> UPTATE */
     const transaction = DB.transaction(['clientes'], 'readwrite');
     const objectStore = transaction.objectStore('clientes');
@@ -76,12 +80,12 @@ function actualizarCliente(cliente) {
 }
 
 /*FUNCION DELETE*/
-function eliminarCliente(e) {
+export function eliminarCliente(e) {
     if (e.target.classList.contains('eliminar')) {
         e.preventDefault();
         const id = Number(e.target.dataset.cliente);
 
-        console.log(id);
+        // console.log(id);
 
         /* ventanas emergentes
             confirm: ventana emergente que me permite confirmar acciones, para ventanas emergentes mas personalizadas visitar la libreria sweet alert: https://sweetalert2.github.io/ 
