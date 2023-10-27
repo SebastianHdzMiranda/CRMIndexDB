@@ -1,7 +1,5 @@
 import { imprimirClientes } from "./client-service.js";
-
 export let DB;
-
 
 /* CREA DB */
 export function crearDB() {
@@ -10,7 +8,6 @@ export function crearDB() {
     crearDB.onsuccess = ()=> {
         // pasando la BD a una variable global
         DB = crearDB.result;
-
         imprimirClientes();
     }
 

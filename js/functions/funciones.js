@@ -1,5 +1,7 @@
-import { creandoNuevoCliente } from "../service/client-service.js";
-import { contenedorListado, editando } from "../variables/variables.js";
+import { id } from "../editarcliente.js";
+import { actualizarCliente, creandoNuevoCliente } from "../service/client-service.js";
+import { DB } from "../service/indexDB.js";
+import { contenedorListado, editando, edicion } from "../variables/variables.js";
 
 export function imprimirAlerta(mensaje, tipo) {
     // evitando duplicidad
@@ -39,13 +41,12 @@ export function validarForm(e) {
         imprimirAlerta('Todos los campos son obligatorios', 'error');    
         return;
     } 
-
+    console.log(editando);
     if (editando) {
-        
         const cliente = {nombre, email, telefono, empresa, id};
         actualizarCliente(cliente);
+        edicion(false);
     } else {
-
         const cliente = {nombre, email, telefono, empresa, id: Date.now()}
         creandoNuevoCliente(cliente);
     }
@@ -58,7 +59,7 @@ export function validarForm(e) {
 
 }
 
-/*FUNCION QUE LLENA LOS INPUTS */
+/* funcion que llenaInputs en edicion */
 export function llenarForm() {
     
 
