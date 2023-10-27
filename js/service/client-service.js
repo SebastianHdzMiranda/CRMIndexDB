@@ -1,4 +1,4 @@
-import { limpiarHTML } from "../functions/funciones.js";
+import { imprimirAlerta, limpiarHTML } from "../functions/funciones.js";
 import { contenedorListado } from "../variables/variables.js";
 import { DB } from "./indexDB.js";
 

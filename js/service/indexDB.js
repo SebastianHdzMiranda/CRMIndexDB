@@ -37,7 +37,7 @@ export function crearDB() {
 }
 
 /* CONECTA CON DB */
-function conectarDB() {
+export function conectarDB() {
     const conectarDB = window.indexedDB.open('crm', 1);
 
     conectarDB.onsuccess = ()=> {

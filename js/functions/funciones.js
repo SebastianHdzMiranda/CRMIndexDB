@@ -1,4 +1,5 @@
-import { contenedorListado } from "../variables/variables.js";
+import { creandoNuevoCliente } from "../service/client-service.js";
+import { contenedorListado, editando } from "../variables/variables.js";
 
 export function imprimirAlerta(mensaje, tipo) {
     // evitando duplicidad
