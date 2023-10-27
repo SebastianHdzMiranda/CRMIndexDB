@@ -3,67 +3,65 @@
     // selectores
     const contenedorListado = document.querySelector('#listado-clientes');
 
-    
+    // variable
     let DB;
     
+    // ejecutador
     window.onload = ()=> {
         crearDB();
         contenedorListado.addEventListener('click', eliminarCliente);
     } 
 
-    class UI {
-       
-        imprimirClientes(){
-            this.limpiarHTML();
+    /*FUNCION READ*/   
+    function imprimirClientes(){
+        limpiarHTML();
 
-            /* IndexDB -> READ */
-            const transaction = DB.transaction(['clientes']);
-            const objectStore = transaction.objectStore('clientes');
-            const solicitud = objectStore.openCursor();
+        /* IndexDB -> READ */
+        const transaction = DB.transaction(['clientes']);
+        const objectStore = transaction.objectStore('clientes');
+        const solicitud = objectStore.openCursor();
 
-            solicitud.onsuccess = ()=> {
-                const cursor = solicitud.result;
+        solicitud.onsuccess = ()=> {
+            const cursor = solicitud.result;
 
-                if (cursor) {
-                    const {nombre, email, telefono, empresa, id} = cursor.value
+            if (cursor) {
+                const {nombre, email, telefono, empresa, id} = cursor.value
 
-                    /* += 
-                        se utiliza para agregar contenido al final de una cadena o elemento en lugar de reemplazarlo. 
-                        Si previamente había contenido en contenedorListado, el operador += agrega el nuevo contenido HTML después del contenido existente,
-                    */
-                    contenedorListado.innerHTML += `
-                        <tr>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <p class="text-sm leading-5 font-medium text-gray-700 text-lg  font-bold">${nombre}</p>
-                                <p class="text-sm leading-10 text-gray-700"> ${email} </p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">
-                                <p class="text-gray-700">${telefono}</p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 leading-5 text-gray-700">    
-                                <p class="text-gray-600">${empresa}</p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
-                                <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Editar</a>
-                                <a href="#" data-cliente=${id} class="text-red-600 hover:text-red-900 eliminar">Eliminar</a>
-                            </td>                    
-                        </tr>
-                    `;
-                    
+                /* += 
+                    se utiliza para agregar contenido al final de una cadena o elemento en lugar de reemplazarlo. 
+                    Si previamente había contenido en contenedorListado, el operador += agrega el nuevo contenido HTML después del contenido existente,
+                */
+                contenedorListado.innerHTML += `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <p class="text-sm leading-5 font-medium text-gray-700 text-lg  font-bold">${nombre}</p>
+                            <p class="text-sm leading-10 text-gray-700"> ${email} </p>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">
+                            <p class="text-gray-700">${telefono}</p>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 leading-5 text-gray-700">    
+                            <p class="text-gray-600">${empresa}</p>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
+                            <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Editar</a>
+                            <a href="#" data-cliente=${id} class="text-red-600 hover:text-red-900 eliminar">Eliminar</a>
+                        </td>                    
+                    </tr>
+                `;
+                
 
-                    cursor.continue();
-                }
+                cursor.continue();
             }
-
         }
 
-        limpiarHTML() {
-            while(contenedorListado.firstChild) {
-                contenedorListado.removeChild(contenedorListado.firstChild);
-            }
+    }
+
+    function limpiarHTML() {
+        while(contenedorListado.firstChild) {
+            contenedorListado.removeChild(contenedorListado.firstChild);
         }
     }
-    const ui = new UI();
 
     function crearDB() {
         const crearDB = window.indexedDB.open('crm', 1);
@@ -72,7 +70,7 @@
             // pasando la BD a una variable global
             DB = crearDB.result;
 
-            ui.imprimirClientes();
+            imprimirClientes();
         }
 
         crearDB.onerror = ()=> {
@@ -97,7 +95,7 @@
 
     }
     
-
+    /*FUNCION DELETE*/
     function eliminarCliente(e) {
         if (e.target.classList.contains('eliminar')) {
             e.preventDefault();
@@ -116,7 +114,7 @@
     
                 objectStore.delete(id);
                 transaction.oncomplete = ()=> {
-                    ui.imprimirClientes();
+                    imprimirClientes();
                 }
                 transaction.onerror = ()=> {
                     console.log('Hubo un error');

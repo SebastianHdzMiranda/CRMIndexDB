@@ -1,5 +1,6 @@
 // Archivo js para funciones que comparten los demas archivos .js
 let DB;
+let editando = false;
 const formulario = document.querySelector('#formulario');
 
 function conectarDB() {

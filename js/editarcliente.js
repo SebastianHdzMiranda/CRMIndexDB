@@ -1,9 +1,11 @@
 (function () {
+    editando = true;
+    console.log(editando);
     // instanciar una clase nativa que viene de JS para obtener el id desde params
     const url = new URL(window.location);
     const id = Number(url.searchParams.get('id'));
 
-
+    // ejecutador
     window.onload = ()=> {
         conectarDB();
         setTimeout(() => {
@@ -12,6 +14,7 @@
         formulario.addEventListener('submit', validarForm);
     }
 
+    // validacion 
     function validarForm(e) {
         e.preventDefault();
 
@@ -37,8 +40,9 @@
 
     }
 
+    /* FUNCION UPDATE*/
     function actualizarCliente(cliente) {
-        /* IndexDB -> UPTADE */
+        /* IndexDB -> UPTATE */
         const transaction = DB.transaction(['clientes'], 'readwrite');
         const objectStore = transaction.objectStore('clientes');
 
@@ -52,6 +56,7 @@
         }
     }
 
+    /*FUNCION QUE LLENA LOS INPUTS */
     function llenarForm() {
         
 

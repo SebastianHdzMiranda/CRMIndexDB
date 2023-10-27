@@ -1,12 +1,14 @@
 (function () {
-    // selectores
+    console.log(editando);
 
+    // ejecutador
     window.onload = ()=> {
         conectarDB();
         formulario.addEventListener('submit', validarForm);
     }
 
 
+    // validacion
     function validarForm(e) {
         e.preventDefault();
 
@@ -17,9 +19,7 @@
         const empresa = document.querySelector('#empresa').value;
 
         if (nombre === '' || email === '' || telefono === '' || empresa === '') {
-            console.log('Todos los campos son necesarios');
             imprimirAlerta('Todos los campos son obligatorios', 'error');    
-
             return;
         }
             
@@ -33,6 +33,8 @@
         }, 1000);
     }
 
+
+    /* FUNCION CREATE */
     function creandoNuevoCliente(cliente) {
         /* IndexDB -> CREATE */
         const transaction = DB.transaction(['clientes'], 'readwrite');
@@ -45,18 +47,6 @@
         }
         transaction.onerror = ()=> {
             imprimirAlerta('Hubo un error', 'error');                
-        }
-    }
-
-    function conectarDB() {
-        const conectarDB = window.indexedDB.open('crm', 1);
-
-        conectarDB.onsuccess = ()=> {
-            // pasando la BD a una variable global
-            DB = conectarDB.result;
-        }
-        conectarDB.onerror = ()=> {
-            console.log('Hubo un error');
         }
     }
 })();
